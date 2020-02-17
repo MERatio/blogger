@@ -1,5 +1,6 @@
 <h1><%= @article.title %></h1>
 
+<%# Tags %>
 <p>
   Tags:
   <% @article.tags.each do |tag| %>
@@ -7,13 +8,23 @@
   <% end %>
 </p>
 
+<%# Image %>
+<p>
+  <% if @article.image.exists? %>
+    <%= image_tag @article.image.url(:medium) %>
+  <% end %>
+</p>
+
+<%# Article body %>
 <p><%= @article.body %></p>
 <%= link_to "edit", edit_article_path(@article) %>
 <%= link_to "delete", article_path(@article), method: :delete, data: {confirm: "Really delete the article?"} %>
 
+<%# Comment form %>
 <%= render partial: 'comments/forms' %>
 
 <%= link_to "<< Back to the Article List", articles_path %>
 
+<%# Comments %>
 <h3>Comments (<%= @article.comments.size %>)</h3>
 <%= render partial: 'articles/comment', collection: @article.comments %>
